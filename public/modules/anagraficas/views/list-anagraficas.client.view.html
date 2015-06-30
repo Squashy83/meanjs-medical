@@ -1,0 +1,57 @@
+<section data-ng-controller="AnagraficasController" data-ng-init="find()">
+    <div class="page-header">
+        <h1><span class="label label-success">Anagraficas</span></h1>
+    </div>
+   
+        
+        
+    
+    <div class="alert alert-warning text-center" data-ng-hide="!anagraficas.$resolved || anagraficas.length">
+    	No Anagraficas yet, why don't you <a href="/#!/anagraficas/create">create one</a>?
+    </div>
+    
+
+ 
+ <div class="row">
+            <div class="col-xs-4">
+              <h3><label class="label label-default" for="search">Search:</label></h3>
+              <input ng-model="q" id="search" class="form-control" placeholder="Filter text">
+            </div>
+            <div class="col-xs-4">
+              <h3><label class="label label-default" for="search">items per page:</label></h3>
+              <input type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+            </div>
+          </div>
+          <br>
+          <div class="panel panel-default">
+
+
+            <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Actions</th>
+              </tr>
+                
+            </thead>
+            <tbody>
+                <tr dir-paginate="anagrafica in anagraficas | filter:q | itemsPerPage: pageSize" current-page="currentPage"><td data-ng-bind="anagrafica.surname | uppercase"></td>
+                <td data-ng-bind="anagrafica.name"></td>
+                <td><a class="btn btn-primary" href="/#!/anagraficas/{{anagrafica._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+              <!--      <a class="btn btn-primary" href="/#!/anamnesis/create"  data-ng-click="link2Anagrafica();">
+			<i class="glyphicon glyphicon-heart-empty"></i>
+		</a>-->
+                    <a class="btn btn-primary" href="/#!/anagraficas/{{anagrafica._id}}">
+			<i class="glyphicon glyphicon-list"></i>
+		</a>
+                  </td></tr></tbody>
+          </table>
+
+          </div>
+          <div class="text-center">
+          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"></dir-pagination-controls>
+          </div>
+</section>

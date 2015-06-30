@@ -1,0 +1,453 @@
+<section data-ng-controller="AnagraficasController" data-ng-init="findOne()">
+    <div class="page-header">
+        <h1><span class="label label-success">Edit Anagrafica</span></h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="update()" novalidate>
+           <fieldset>
+                <div class="form-group">
+                    <h3><label class="label label-default" for="name">Name</label></h3>
+
+                    <div class="controls">
+                        <input type="text" data-ng-model="anagrafica.name" id="name" class="form-control" placeholder="Name" required>
+                    </div>
+                 <h3><label class="label label-default" for="surname">Surname</label></h3>
+                    <div class="controls">
+                        <input type="text" data-ng-model="anagrafica.surname" id="surname" class="form-control" placeholder="Insert the Surname" required>
+                    </div>
+                    <h3><label class="label label-default" for="birthday">Date of Birth</label></h3>
+                    <div class="controls" >
+                        <input type="date" ng-change="flagIsChild();" data-ng-model="anagrafica.birthday" id="birthday" class="form-control" placeholder="Date of birth" required>
+                    </div>
+                    <h3><label class="label label-default" for="fiscalcode">CF code</label></h3>
+                    <div class="controls">
+                        <input type="text" data-ng-model="anagrafica.fiscalcode" id="fiscalcode" class="form-control" placeholder="Please insert the CF" required>
+                    </div>
+                    <h3><label class="label label-default" for="gender">Gender</label></h3>
+                    <div class="controls">
+                        F<input type="radio" name="gender" value=0 checked="checked" data-ng-model="anagrafica.gender" id="gender" class="form-control" required>
+                       M<input type="radio" name="gender" value=1 data-ng-model="anagrafica.gender" id="gender" class="form-control" required>
+                    </div>
+                    <h3><label class="label label-default" for="legaladdress">Legal Address</label></h3>
+                    <div class="controls">
+                        <input type="text" data-ng-model="anagrafica.legaladdress" id="legaladdress" class="form-control" placeholder="Please insert the Legal Address" required>
+                    </div>
+                    <h3><label class="label label-default" for="legaladdress">Real Address</label></h3>
+                    <div class="controls">
+                        <input type="text" data-ng-model="anagrafica.realaddress" id="realaddress" class="form-control" placeholder="Please insert the Real Address" required>
+                    </div>
+                    
+                   <!-- <h3><label class="label label-default" for="ischild">Is a child?</label></h3>
+                    <div class="controls">
+                        NO<input type="radio" name="ischild" value=0 checked="checked" data-ng-model="anagrafica.ischild" id="ischild" class="form-control" required  readonly>
+                       YES<input type="radio" name="ischild" value=1 data-ng-model="anagrafica.ischild" id="ischild" class="form-control" required  readonly>
+                    </div>-->
+                    
+                    <div ng-show="anagrafica.ischild">
+                    <h3><label class="label label-default" for="isorphan">Is orphan?</label></h3>
+                    <div class="controls">
+                        NO<input type="radio" name="isorphan" value=0 checked="checked" data-ng-model="anagrafica.isorphan" id="isorphan" class="form-control" required>
+                       YES<input type="radio" name="isorphan" value=1 data-ng-model="anagrafica.isorphan" id="isorphan" class="form-control" required>
+                    </div>
+                        </div>
+                    <div ng-hide="anagrafica.ischild">
+                     <h3><label class="label label-default" for="civilstate">Civil State</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.civilstate" id="civilstate" class="form-control" placeholder="Civil State">
+                    //RENDERE DINAMICO DROPDOWN CON INSERIMENTO
+                    <option value="SPO">Sposato</option>
+                    <option value="CEL">Celibe</option>
+                    <option value="NUB">Nubile</option>
+                    </select>
+                        </div>
+                    </div>
+                    <h3><label class="label label-default" for="italyborn">Born in Italy?</label></h3>
+                    <div class="controls">
+                        NO<input type="radio" name="italyborn" value=0 checked="checked" data-ng-model="anagrafica.italyborn" id="italyborn" class="form-control" required>
+                       YES<input type="radio" name="italyborn" value=1 data-ng-model="anagrafica.italyborn" id="italyborn" class="form-control" required>
+                    </div>
+                    
+                    <div ng-hide="anagrafica.italyborn">
+                    <h3><label class="label label-default" for="comingfrom">Coming from</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.comingfrom" id="comingfrom" class="form-control" placeholder="The country he came from">
+                    //RENDERE DINAMICO
+                    <option value="ITA">ITALIA</option>
+                    <option value="BRA">BRASILE</option>
+                    <option value="GUA">GUATEMALA</option>
+                    </select>
+                        </div>
+                    </div>
+                    <h3><label class="label label-default" for="nationality">Nationality</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.nationality" id="nationality" class="form-control" placeholder="The Nationality">
+                    //RENDERE DINAMICO
+                    <option value="COL">COLOMBIANA</option>
+                    <option value="PER">PERUVIANA</option>
+                    <option value="IND">INDIANA</option>
+                    </select>
+                        </div>
+                    
+                    <h3><label class="label label-default" for="spokenlanguage">Spoken Language</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.spokenlanguage" id="spokenlanguage" class="form-control" placeholder="Spoken Language">
+                    //RENDERE DINAMICO
+                    <option value="ENG">INGLESE</option>
+                    <option value="ARA">ARABO</option>
+                    <option value="CIN">CINESE</option>
+                    </select>
+                        </div>
+
+                    <div ng-show="anagrafica.ischild">
+                <h3><label class="label label-default" for="livewith">Living with</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.livewith" id="livewith" class="form-control" placeholder="Live with">
+                    //RENDERE DINAMICO
+                    <option value="BOT">BOTH</option>
+                    <option value="FAT">FATHER</option>
+                    <option value="MOT">MOTHER</option>
+                    <option value="GRA">GRANDPARENT</option>
+                    <option value="UNC">UNCLE</option>    
+                    <option value="OTH">OTHER</option>
+                    </select>
+                        </div>
+                    
+                    <h3><h3><label class="label label-default" for="father">Father</label></h3></h3>
+                    <div class="controls">
+                        <!--<a class="btn btn-primary" ng-href="/#!/anagraficas/create">
+			<i class="glyphicon glyphicon-new-window"></i>
+		</a>-->
+                       <h3> <a class="btn btn-primary" ng-click="clickToOpenF()">
+			<i class="glyphicon glyphicon-search"></i>
+		</a>  
+        <span class="label label-info">{{anagrafica.father.name}} {{anagrafica.father.surname}}</span></h3>                
+                        <!--template for dialog Fathers--> 
+<script type="text/ng-template" id="fatherslist">
+    
+    <h1>Choose the father:</h1>
+    <div class="row">
+            <div class="col-xs-4">
+              <h3><label class="label label-default" for="search">Search:</label></h3>
+              <input ng-model="q" id="search" class="form-control" placeholder="Filter text">
+            </div>
+            <div class="col-xs-4">
+              <h3><label class="label label-default" for="search">items per page:</label></h3>
+              <input type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+            </div>
+          </div>
+          <br>
+          <div class="panel panel-default">
+
+<!--                <a class="btn btn-primary" href="/#!/anagraficas/create">
+			<i class="glyphicon glyphicon-new-window" ng-click="closeThisDialog(0)"></i>
+		</a>-->
+            <table class="table table-hover" data-ng-init="loadFathers()">
+            <thead>
+              <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+              </tr>
+                
+            </thead>
+            <tbody>
+
+                <tr ng-click="selectList(father)" ng-class="{'success':father == currentFather}" dir-paginate="father in fathers | filter:q | itemsPerPage: pageSize" current-page="currentPage"><td data-ng-bind="father.surname | uppercase"></td>
+                <td data-ng-bind="father.name"></td>
+                </tr></tbody>
+          </table>
+
+          </div>
+          <div class="text-center">
+          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"></dir-pagination-controls>
+          </div>
+    <br/>
+    <div class="ngdialog-buttons">
+                    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)">Cancel</button>
+                    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirmF(); closeThisDialog(0)">Ok</button> 
+                </div>
+</script>
+                    
+                        </div>
+                    <h3><label class="label label-default" for="mother">Mother</label></h3>
+                    <div class="controls">
+                       <!-- <a class="btn btn-primary" ng-href="/#!/anagraficas/create">
+			<i class="glyphicon glyphicon-new-window"></i>
+		</a>-->
+                       <h3> <a class="btn btn-primary" ng-click="clickToOpenM()">
+			<i class="glyphicon glyphicon-search"></i>
+		</a>     
+        <span class="label label-info">{{anagrafica.mother.name}} {{anagrafica.mother.surname}}</span></h3>   
+                        <!--template for dialog Mothers--> 
+<script type="text/ng-template" id="motherslist">
+    <div class="row">
+            <div class="col-xs-4">
+              <h3><label class="label label-default" for="search">Search:</label></h3>
+              <input ng-model="q" id="search" class="form-control" placeholder="Filter text">
+            </div>
+            <div class="col-xs-4">
+              <h3><label class="label label-default" for="search">items per page:</label></h3>
+              <input type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+            </div>
+          </div>
+          <br>
+          <div class="panel panel-default">
+
+<!--                <a class="btn btn-primary" href="/#!/anagraficas/create">
+			<i class="glyphicon glyphicon-new-window" ng-click="closeThisDialog(0)"></i>
+		</a>-->
+            <table class="table table-hover"  data-ng-init="loadMothers()">
+            <thead>
+              <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+              </tr>
+                
+            </thead>
+            <tbody>
+
+                <tr ng-click="selectList(mother)" ng-class="{'success':mother == currentMother}"  dir-paginate="mother in mothers | filter:q | itemsPerPage: pageSize" current-page="currentPage"><td data-ng-bind="mother.surname | uppercase"></td>
+                <td data-ng-bind="mother.name"></td>
+                </tr></tbody>
+          </table>
+
+          </div>
+          <div class="text-center">
+          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"></dir-pagination-controls>
+          </div>
+    <br/>
+    <div class="ngdialog-buttons">
+                    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)">Cancel</button>
+                    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirmM(); closeThisDialog(0)">Ok</button> 
+                </div>
+</script>
+                    
+                        </div>
+                    </div>
+                    
+                    <h3><label class="label label-default" for="familyitalydate">Date of family arrival in Italy</label></h3>
+                    <div class="controls">
+                        <input type="date" data-ng-model="anagrafica.familyitalydate" id="familyitalydate" class="form-control" placeholder="Please insert the date the family arrived in Italy" required>
+                    </div>
+                    
+                    <h3><label class="label label-default" for="community">Community</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.community" id="community" class="form-control" placeholder="Community">
+                    //RENDERE DINAMICO
+                    <option value="ID1">TOR BELLA MONACA</option>
+                    <option value="ID2">TOR MARANCIA</option>
+                    <option value="ID3">PORTO FLUVIALE</option>
+                    </select>
+                        </div>
+                    
+                    <div ng-hide="anagrafica.ischild">
+                    <h3><label class="label label-default" for="phone">Phone Number</label></h3>
+                    <div class="controls">
+                        <input type="tel" data-ng-model="anagrafica.phone" id="phone" class="form-control" placeholder="Please insert the phone number" required>
+                    </div>
+                    </div>
+                    <div ng-show="anagrafica.ischild">
+                     <div ng-show="anagrafica.italyborn">
+
+                    <h3><label class="label label-default" for="wentbackcountry">Went back to country of origin?</label></h3>
+                    <div class="controls">
+                        NO<input type="radio" name="wentbackcountry" value=0 checked="checked" data-ng-model="anagrafica.wentbackcountry" id="wentbackcountry" class="form-control" required>
+                       YES<input type="radio" name="wentbackcountry" value=1 data-ng-model="anagrafica.wentbackcountry" id="wentbackcountry" class="form-control" required>
+                    </div>
+                        <div ng-show="anagrafica.wentbackcountry">
+                        <h3><label class="label label-default" for="wentbackcountrystartdate">Time spent in country of origin</label></h3>
+                    
+                    <div class="controls">
+                        Start date<input type="date" data-ng-model="anagrafica.wentbackcountrystartdate" id="wentbackcountrystartdate" class="form-control" placeholder="Please insert the date the family went back to country of origin" required>
+                       End date<input type="date" data-ng-model="anagrafica.wentbackcountryenddate" id="wentbackcountryenddate" class="form-control" placeholder="Please insert the date the family went back to Italy" required>
+                    </div>
+                    
+                    <h3><label class="label label-default" for="wentbackcountrywith">Went back in country of origin with</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.wentbackcountrywith" id="wentbackcountrywith" class="form-control" placeholder="Live with">
+                    //RENDERE DINAMICO
+                    <option value="BOT">BOTH</option>
+                    <option value="FAT">FATHER</option>
+                    <option value="MOT">MOTHER</option>
+                    <option value="GRA">GRANDPARENT</option>
+                    <option value="UNC">UNCLE</option>    
+                    <option value="OTH">OTHER</option>
+                    </select>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                    <div ng-hide="anagrafica.ischild">
+                    <h3><label class="label label-default" for="jobtype">Current Job type</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.jobtype" id="jobtype" class="form-control" placeholder="Job type">
+                    //RENDERE DINAMICO DROPDOWN CON INSERIMENTO
+                    <option value="UNE">Unemployed</option>
+                    <option value="GIA">Giardiniere</option>
+                    <option value="IMP">Impiegato</option>
+                    <option value="FAC">Facchino</option>
+                    </select>
+                        </div>
+                    <h3><label class="label label-default" for="oldjobtype">Job type in the country of origin</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.oldjobtype" id="oldjobtype" class="form-control" placeholder="Job type">
+                    //RENDERE DINAMICO DROPDOWN CON INSERIMENTO
+                    <option value="UNE">Unemployed</option>
+                    <option value="GIA">Giardiniere</option>
+                    <option value="IMP">Impiegato</option>
+                    <option value="FAC">Facchino</option>
+                    </select>
+                        </div>
+                    </div>
+                    <h3><label class="label label-default" for="education">Education</label></h3>
+                    <div class="controls">
+                    <select data-ng-model="anagrafica.education" id="education" class="form-control" placeholder="Education">
+                    //RENDERE DINAMICO DROPDOWN CON INSERIMENTO
+                    <option value="MED">Scuola Obbligo</option>
+                    <option value="SUP">Scuola Superiore</option>
+                    <option value="UNI">Universitaria</option>
+                    </select>
+                        </div>
+                    
+                    <h3><label class="label label-default" for="legalsituation">How's his legal situation in Italy?</label></h3>
+                    <div class="controls">
+                        NOT OK<input type="radio" name="legalsituation" value=0 checked="checked" data-ng-model="anagrafica.legalsituation" id="legalsituation" class="form-control" required>
+                       OK<input type="radio" name="legalsituation" value=1 data-ng-model="anagrafica.legalsituation" id="legalsituation" class="form-control" required>
+                    </div>
+                    <br/>
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3><label class="label label-default" for="permission">Permission to stay in Italy</label></h3>    </div>
+                        <div class="panel-body">
+                    <div class="controls">
+                     <table class="table table-striped">
+            <thead>
+                <br/>
+              <tr>
+                <th><h5><span class="label label-primary">Type</span></h5></th>
+                <th><h5><span class="label label-primary">Valid from</span></h5></th>
+                <th><h5><span class="label label-primary">Until to</span></h5></th>
+              </tr>
+                
+            </thead>
+            <tbody>
+                
+              <tr>
+<!--                <a data-ng-href="#!/anagraficas/{{anagrafica._id}}" class="list-group-item">-->
+                <td>                   
+                    <select data-ng-model="anagrafica.permission.type" id="permtype" class="form-control" placeholder="Type">
+                    //RENDERE DINAMICO DROPDOWN CON INSERIMENTO
+                    <option value="BEL">Bello</option>
+                    <option value="BRU">Brutto</option>
+                    </select>
+                        </td>
+               
+                  <td><input type="date" data-ng-model="anagrafica.permission.validfrom" id="permvalidfrom" class="form-control" placeholder="ID valid from date" required></td>
+                  <td><input type="date" data-ng-model="anagrafica.permission.validto" id="permvalidto" class="form-control" placeholder="ID valid until date" required></td>
+              </tr>
+            </tbody>
+          </table>
+                    </div>
+                        </div>
+                        </div>
+                    
+                    <div class="panel panel-default">
+                    <div class="panel-heading"><h3><label class="label label-default" for="documents">ID Documents List</label><span> </span><a class="btn btn-primary" ng-click="addDocumentEdit();">
+			<i class="glyphicon glyphicon-plus"></i>
+                        </a></h3></div>
+                        <div class="panel-body">
+                    <div class="controls">
+                     <table class="table table-striped">
+            <thead>
+                
+              <tr>
+                  <th><h5><span class="label label-primary">ID Type</span></h5></th>
+                  <th><h5><span class="label label-primary">ID No.</span></h5></th>
+                  <th><h5><span class="label label-primary">Valid from</span></h5></th>
+                  <th><h5><span class="label label-primary">Until to</span></h5></th>
+                  <th><h5><span class="label label-info">Actions</span></h5></th>
+              </tr>
+                
+            </thead>
+            <tbody>
+                
+              <tr ng-repeat="document in anagrafica.documents">
+<!--                <a data-ng-href="#!/anagraficas/{{anagrafica._id}}" class="list-group-item">-->
+                <td>                   
+                    <select data-ng-model="document.idtype" id="idtype" class="form-control" placeholder="ID type">
+                    //RENDERE DINAMICO DROPDOWN CON INSERIMENTO
+                    <option value="PES">Permesso di Soggiorno</option>
+                    <option value="CID">Carta Identità</option>
+                    <option value="PAS">Passaporto</option>
+                    <option value="PAT">Patente</option>
+                    <option value="SAN">Tessera Sanitaria</option>
+                    <option value="CFI">Codice Fiscale</option>
+                    </select>
+                        </td>
+                <td><input type="text" data-ng-model="document.number" id="number" class="form-control" placeholder="Insert the No." required></td>
+                  
+                  <td><input type="date" data-ng-model="document.idvalidfrom" id="idvalidfrom" class="form-control" placeholder="ID valid from date" required></td>
+                  <td><input type="date" data-ng-model="document.idvalidto" id="idvalidto" class="form-control" placeholder="ID valid until date" required></td>
+                <td><a class="btn btn-danger" ng-click="removeDocumentEdit($index);">
+			<i class="glyphicon glyphicon-remove"></i>
+		</a>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+                 </div>  
+                    </div>
+                    </div>
+                        <div class="panel panel-default">
+                    <div class="panel-heading"><h3><label class="label label-default" for="desiderata">Desiderata List</label><span> </span><a class="btn btn-primary" ng-click="addDesireEdit();">
+			<i class="glyphicon glyphicon-plus"></i>
+                        </a></h3></div>
+                    <div class="panel-body">
+                    <div class="controls">
+                     <table class="table table-striped">
+            <thead>
+                <br/>
+                
+              <tr>
+                  <th><h5><span class="label label-primary">Type</span></h5></th>
+                  <th><h5><span class="label label-primary">Notes</span></h5></th>
+                  <th><h5><span class="label label-info">Actions</span></h5></th>
+              </tr>
+                
+            </thead>
+            <tbody>
+                
+              <tr ng-repeat="desire in anagrafica.desiderata">
+<!--                <a data-ng-href="#!/anagraficas/{{anagrafica._id}}" class="list-group-item">-->
+                <td>                   
+                    <select data-ng-model="desire.type" id="type" class="form-control" placeholder="Type">
+                    //RENDERE DINAMICO DROPDOWN CON INSERIMENTO
+                    <option value="JOB">Lavoro</option>
+                    <option value="MED">Cure Mediche</option>
+                    <option value="FOO">Cibo</option>
+                    <option value="MON">Soldi</option>
+                    <option value="LIS">Ascolto</option>
+                    <option value="AMI">Amicizia</option>
+                    </select>
+                        </td>
+                <td><textarea data-ng-model="desire.note" id="note" class="form-control" placeholder="note" required></textarea></td>
+                <td><a class="btn btn-danger" ng-click="removeDesireEdit($index);">
+			<i class="glyphicon glyphicon-remove"></i>
+		</a>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+                 </div>
+                    </div>  
+                    </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+				<div data-ng-show="anagrafica.error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+            </fieldset>
+        </form>
+    </d
+</section>

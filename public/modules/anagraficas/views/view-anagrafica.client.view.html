@@ -1,0 +1,48 @@
+<section data-ng-controller="AnagraficasController" data-ng-init="findOne()">
+	<div class="page-header">
+        <table>
+            <tr>
+         <td><h1><span class="label label-info" data-ng-bind="anagrafica.surname"></h1></td>
+             <td>&nbsp;</td>
+         <td><h1><small data-ng-bind="anagrafica.name"></small></h1></td>
+             </tr>
+         </table>
+	</div>
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == anagrafica.user._id))">
+		<a class="btn btn-primary" href="/#!/anamnesis/create"  data-ng-click="link2Anagrafica();">
+			<i class="glyphicon glyphicon-heart-empty"></i>
+		</a>
+		<a class="btn btn-primary" data-ng-click="remove();">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	
+
+
+</br></br>
+
+  </section>
+<section data-ng-controller="AnamnesisController" data-ng-init="findByAnagrafica()">
+  <tabset justified="true">
+      <tab heading="Statistics"></br></br><nvd3 options="options" data="data"></nvd3></tab>
+    <tab heading="Anamnesis History">
+    
+    <div class="list-group">
+        <a data-ng-repeat="anamnesi in anamnesis" data-ng-href="#!/anamnesis/{{anamnesi._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Examined on
+				<span data-ng-bind="anamnesi.created | date:'medium'"></span>
+				by Dr.
+				<span data-ng-bind="anamnesi.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="anamnesi.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!anamnesis.$resolved || anamnesis.length">
+    	No Anamnesis yet, why don't you <a href="/#!/anamnesis/create">create one</a>?
+    </div></tab>
+    
+    <tab heading="Suggestions">Analitics HERE</tab>
+
+  </tabset>
+</section>

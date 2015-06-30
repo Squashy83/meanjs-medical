@@ -1,0 +1,6 @@
+{
+    "jscodehints.detectedExclusions": [
+        "D:/coding/healthnet/public/modules/anamnesis/anamnesis.client.module.js",
+        "D:/coding/healthnet/public/lib/angular-smart-table/gulpFile.js"
+    ]
+}
